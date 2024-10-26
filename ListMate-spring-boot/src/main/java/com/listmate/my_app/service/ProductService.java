@@ -1,13 +1,14 @@
 package com.listmate.my_app.service;
 
 import com.listmate.my_app.domain.Product;
+import com.listmate.my_app.domain.User;
 import com.listmate.my_app.model.ProductDTO;
 import com.listmate.my_app.repos.ProductRepository;
-import com.listmate.my_app.util.NotFoundException;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 
 @Service
 public class ProductService {
@@ -25,22 +26,25 @@ public class ProductService {
                 .toList();
     }
 
-    public ProductDTO get(final Integer id) {
-        return productRepository.findById(id)
+    public List<ProductDTO> getProductByUser(final User user) {
+        return productRepository.findByUser(user)
+                .stream()
                 .map(product -> mapToDTO(product, new ProductDTO()))
-                .orElseThrow(NotFoundException::new);
+                .toList();
     }
 
-    public Integer create(final ProductDTO productDTO) {
+    public Integer create(final ProductDTO productDTO, User user) {
         final Product product = new Product();
         mapToEntity(productDTO, product);
+        product.setUpdatedAt(LocalDateTime.now());
+        product.setCreatedAt(LocalDateTime.now());
+        product.setUser(user);
         return productRepository.save(product).getId();
     }
 
-    public void update(final Integer id, final ProductDTO productDTO) {
-        final Product product = productRepository.findById(id)
-                .orElseThrow(NotFoundException::new);
+    public void update(final Product product, final ProductDTO productDTO) {
         mapToEntity(productDTO, product);
+        product.setUpdatedAt(LocalDateTime.now());
         productRepository.save(product);
     }
 
