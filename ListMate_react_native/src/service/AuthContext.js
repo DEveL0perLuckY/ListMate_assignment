@@ -1,13 +1,11 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, {createContext, useState, useContext, useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider = ({children}) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  React.useEffect(() => {
+  useEffect(() => {
     checkAuth();
   }, []);
 
@@ -16,7 +14,7 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(!!token);
   };
 
-  const handleLogin = async (token) => {
+  const handleLogin = async token => {
     await AsyncStorage.setItem('token', token);
     setIsAuthenticated(true);
   };
@@ -24,12 +22,12 @@ export const AuthProvider = ({ children }) => {
   const handleLogout = async () => {
     await AsyncStorage.removeItem('token');
     setIsAuthenticated(false);
-
   };
 
   return (
     <AuthContext.Provider
       value={{
+        checkAuth,
         isAuthenticated,
         handleLogin,
         handleLogout,

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Navigation from './src/navigation/Navigation';
 import * as SplashScreen from 'expo-splash-screen';
 import { AuthProvider } from './src/service/AuthContext';
+import Toast from 'react-native-toast-message';
 SplashScreen.preventAutoHideAsync();
 
 const App = () => {
@@ -28,6 +29,8 @@ const App = () => {
   return (
     <AuthProvider>
       <Navigation />
+      <Toast autoHide={true} visibilityTime={2500} />
+      
     </AuthProvider>
   )
 

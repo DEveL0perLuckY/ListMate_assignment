@@ -81,9 +81,10 @@ public class ProductResource {
         }
         try {
             Product product = productRepository.findById(id).orElseThrow(NotFoundException::new);
-            if (user.get().getUserId() != product.getUser().getUserId()) {
+            if (!user.get().getUserId().equals(product.getUser().getUserId())) { 
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }
+
             productService.update(product, productDTO);
             return ResponseEntity.ok(id);
         } catch (NotFoundException e) {
@@ -94,19 +95,23 @@ public class ProductResource {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable(name = "id") final Integer id,
+    public ResponseEntity<Void> deleteProduct(@PathVariable(name = "id") final String id,
             @RequestHeader("Authorization") String authHeader) {
+        Integer intId=Integer.parseInt(id);
         Optional<User> user = getUserFromToken(authHeader);
         if (user.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
         try {
-            Product product = productRepository.findById(id).orElseThrow(NotFoundException::new);
-            if (user.get().getUserId() != product.getUser().getUserId()) {
+            Product product = productRepository.findById(intId).orElseThrow(NotFoundException::new);
+            Integer userId1 = user.get() != null ? user.get().getUserId() : null;
+            Integer userId2 = product.getUser() != null ? product.getUser().getUserId() : null;
+            if (userId1 == null || userId2 == null || !userId1.equals(userId2)) { 
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }
-            productService.delete(id);
+            
+            productService.delete(intId);
             return ResponseEntity.noContent().build();
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

@@ -69,7 +69,7 @@ public class AuthenticationService {
             userRepository.save(user);
             return new AuthenticationResponse(jwt, "successfull");
         } catch (Exception e) {
-            return new AuthenticationResponse(null, "error user registration");
+            return new AuthenticationResponse(null, "error");
 
         }
     }
