@@ -152,24 +152,10 @@ function Home({ navigation }) {
               <Text style={styles.text}>Rating: {product.rating}</Text>
             </View>
             <Text style={styles.productTimestamp}>
-              Added on: {new Intl.DateTimeFormat('en-US', {
-                month: '2-digit',
-                day: '2-digit',
-                year: 'numeric',
-                hour: 'numeric',
-                minute: '2-digit',
-                hour12: true,
-              }).format(new Date(product.createdAt))}
+              Added on: {new Date(product.createdAt).toLocaleDateString()}
             </Text>
             <Text style={styles.productTimestamp}>
-              Last updated: {new Intl.DateTimeFormat('en-US', {
-                month: '2-digit',
-                day: '2-digit',
-                year: 'numeric',
-                hour: 'numeric',
-                minute: '2-digit',
-                hour12: true,
-              }).format(new Date(product.updatedAt))}
+              Last updated: {new Date(product.createdAt).toLocaleDateString()}
             </Text>
           </View>
         ))}
