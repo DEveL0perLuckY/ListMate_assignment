@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import Toast from 'react-native-toast-message';
@@ -14,7 +14,6 @@ const GetStartedScreen = ({ navigation }) => {
     const checkUserAuth = async () => {
         const token = await AsyncStorage.getItem('token');
         if (!token) {
-            console.log('is here is the error 1');
             Toast.show({
                 text1: 'Authentication Error',
                 text2: 'No token found. Redirecting to Sign In.',
@@ -79,7 +78,6 @@ const GetStartedScreen = ({ navigation }) => {
                 <Text style={styles.buttonText}>Get Started</Text>
             </TouchableOpacity>
 
-            {/* <Toast autoHide={true} visibilityTime={2500} /> */}
         </View>
     );
 };

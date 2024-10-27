@@ -10,6 +10,7 @@ import GetStartedScreen from '../containers/GetStarted';
 import {useAuth} from '../service/AuthContext';
 import {Alert, TouchableOpacity} from 'react-native';
 import ProfileScreen from '../containers/ProfileScreen';
+import Product from '../containers/Product';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -70,6 +71,7 @@ const Navigation = () => {
               }}
               component={TabNavigator}
             />
+            <Stack.Screen name="Product" component={Product} /> 
           </>
         ) : (
           <>
