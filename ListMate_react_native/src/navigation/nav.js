@@ -16,49 +16,18 @@ const Tab = createBottomTabNavigator();
 
 const Navigation = () => {
   const {isAuthenticated, handleLogout} = useAuth();
-  const logoutHandller = () => {
-    Alert.alert(
-      'Logout Confirmation',
-      'Are you sure you want to logout?',
-      [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Logout cancelled'),
-          style: 'cancel',
-        },
-        {
-          text: 'Logout',
-          onPress: () => {
-            handleLogout();
-          },
-        },
-      ],
-      {cancelable: true},
-    );
-  };
+  
   return (
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
-          headerShown: true,
+          headerShown: true, 
           statusBarColor: '#00BFA6',
           orientation: 'portrait_up',
         }}>
         <>
           <Stack.Screen
-            options={{
-              title: 'List Mate',
-              headerRight: () => (
-                <TouchableOpacity activeOpacity={0.7} onPress={logoutHandller}>
-                  <Ionicons
-                    name="log-out"
-                    size={24}
-                    color="black"
-                    style={{marginRight: 15}}
-                  />
-                </TouchableOpacity>
-              ),
-            }}
+            
             name="Tabs"
             component={TabNavigator}
           />

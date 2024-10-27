@@ -11,7 +11,6 @@ const App = () => {
   useEffect(() => {
     const initializeApp = async () => {
       try {
-
         setAppIsReady(true);
         await SplashScreen.hideAsync();
 
@@ -27,9 +26,9 @@ const App = () => {
   }
 
   return (
-    // <AuthProvider>
+    <AuthProvider>
       <Navigation />
-    // </AuthProvider>
+    </AuthProvider>
   )
 
 };

@@ -14,7 +14,6 @@ import com.listmate.my_app.domain.User;
 import com.listmate.my_app.model.ProfileDTO;
 import com.listmate.my_app.repos.UserRepository;
 
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
@@ -39,4 +38,14 @@ public class DemoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/isTokenValid")
+    public ResponseEntity<Boolean> isTokenValid(@RequestHeader("Authorization") String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.badRequest().body(false);
+        }
+        String token = authHeader.substring(7);
+        Optional<User> user = userRepository.findByToken(token);
+
+        return ResponseEntity.ok(user.isPresent());
+    }
 }

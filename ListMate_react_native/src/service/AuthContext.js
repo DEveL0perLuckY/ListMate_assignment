@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 const AuthContext = createContext();
 
@@ -23,6 +24,7 @@ export const AuthProvider = ({ children }) => {
   const handleLogout = async () => {
     await AsyncStorage.removeItem('token');
     setIsAuthenticated(false);
+
   };
 
   return (
